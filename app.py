@@ -20,53 +20,40 @@ st.set_page_config(page_title="Análisis del grupo de WhatsApp - Jóvenes Líder
 # ---------------- SEGURIDAD SIMPLE ----------------
 
 # ---------------- SEGURIDAD SIMPLE ----------------
-# ----------------- LOGIN -----------------
-st.markdown("""
-<style>
-.login-container {
-    max-width: 420px;
-    margin: 120px auto;
-    padding: 2rem;
-    background-color: #ffffff;
-    border-radius: 12px;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.15);
-}
-.login-container h2 {
-    text-align: center;
-    color: #111111;
-}
-.login-container p {
-    text-align: center;
-    color: #444444;
-}
-</style>
-""", unsafe_allow_html=True)
+# ----------------- LOGIN SIMPLE -----------------
+PASSWORD = "jl2025"  # o el que tú quieras
 
-PASSWORD = "jl2025"
+if "auth" not in st.session_state:
+    st.session_state.auth = False
 
-st.markdown("""
-<div class="login-container">
-    <h2>🔐 Acceso privado</h2>
-    <p>Ingresa la clave para acceder al dashboard</p>
-</div>
-""", unsafe_allow_html=True)
-pwd = st.text_input(
-    "Clave de acceso",
-    type="password",
-    label_visibility="collapsed"
-)
+if not st.session_state.auth:
+    st.markdown(
+        """
+        <div style="max-width:420px;margin:auto;margin-top:40px;">
+        <h2 style="text-align:center;">🔐 Acceso privado</h2>
+        <p style="text-align:center;">Ingresa la clave para acceder al dashboard</p>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
 
-btn = st.button("🔓 Ingresar", use_container_width=True)
+    pwd = st.text_input(
+        "Clave de acceso",
+        type="password",
+        label_visibility="collapsed"
+    )
 
-if btn:
-    if pwd == PASSWORD:
-        st.session_state.auth = True
-        st.experimental_rerun()
-    else:
-        st.error("❌ Clave incorrecta")
-        st.stop()
-else:
+    btn = st.button("🔓 Ingresar", use_container_width=True)
+
+    if btn:
+        if pwd == PASSWORD:
+            st.session_state.auth = True
+            st.rerun()
+        else:
+            st.error("❌ Clave incorrecta")
+
     st.stop()
+
 
 #######################
 st.title("📊 Análisis del grupo de WhatsApp - Jóvenes Líderes IPAE")
@@ -610,6 +597,7 @@ if tokens_all:
     st.pyplot(fig)
 else:
     st.info("No hay palabras suficientes para la nube.")
+
 
 
 
