@@ -50,16 +50,23 @@ st.markdown("""
     <p>Ingresa la clave para acceder al dashboard</p>
 </div>
 """, unsafe_allow_html=True)
-
 pwd = st.text_input(
     "Clave de acceso",
     type="password",
     label_visibility="collapsed"
 )
 
-if pwd != PASSWORD:
-    st.stop()
+btn = st.button("🔓 Ingresar", use_container_width=True)
 
+if btn:
+    if pwd == PASSWORD:
+        st.session_state.auth = True
+        st.experimental_rerun()
+    else:
+        st.error("❌ Clave incorrecta")
+        st.stop()
+else:
+    st.stop()
 
 #######################
 st.title("📊 Análisis del grupo de WhatsApp - Jóvenes Líderes IPAE")
@@ -603,5 +610,6 @@ if tokens_all:
     st.pyplot(fig)
 else:
     st.info("No hay palabras suficientes para la nube.")
+
 
 
