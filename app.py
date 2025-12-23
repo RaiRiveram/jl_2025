@@ -20,40 +20,45 @@ st.set_page_config(page_title="Análisis del grupo de WhatsApp - Jóvenes Líder
 # ---------------- SEGURIDAD SIMPLE ----------------
 
 # ---------------- SEGURIDAD SIMPLE ----------------
-PASSWORD = "JL2025"
+# ----------------- LOGIN -----------------
+st.markdown("""
+<style>
+.login-container {
+    max-width: 420px;
+    margin: 120px auto;
+    padding: 2rem;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+}
+.login-container h2 {
+    text-align: center;
+    color: #111111;
+}
+.login-container p {
+    text-align: center;
+    color: #444444;
+}
+</style>
+""", unsafe_allow_html=True)
 
-if "auth_ok" not in st.session_state:
-    st.session_state.auth_ok = False
+PASSWORD = "jl2025"
 
-if not st.session_state.auth_ok:
-    c1, c2, c3 = st.columns([3, 3, 3])
+st.markdown("""
+<div class="login-container">
+    <h2>🔐 Acceso privado</h2>
+    <p>Ingresa la clave para acceder al dashboard</p>
+</div>
+""", unsafe_allow_html=True)
 
-    with c2:
-        st.markdown(
-            """
-            <div style="
-                padding: 25px;
-                border-radius: 10px;
-                background-color: #f6f8fa;
-                box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-            ">
-                <h3 style="text-align:center;">🔐 Acceso privado</h3>
-            """,
-            unsafe_allow_html=True,
-        )
+pwd = st.text_input(
+    "Clave de acceso",
+    type="password",
+    label_visibility="collapsed"
+)
 
-        pwd = st.text_input("Clave de acceso", type="password")
-
-        if pwd == PASSWORD:
-            st.session_state.auth_ok = True
-            st.rerun()
-        elif pwd:
-            st.error("Clave incorrecta")
-
-        st.markdown("</div>", unsafe_allow_html=True)
-
+if pwd != PASSWORD:
     st.stop()
-
 
 
 #######################
@@ -598,4 +603,5 @@ if tokens_all:
     st.pyplot(fig)
 else:
     st.info("No hay palabras suficientes para la nube.")
+
 
